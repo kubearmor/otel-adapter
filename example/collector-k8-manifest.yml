@@ -1,0 +1,30 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: simplest
+spec:
+  image: chinwendu20/receiver
+  config: |
+    receivers:
+      kubearmor_receiver:
+        logfilter: all
+    
+    exporters:
+      logging:
+        verbosity: detailed
+      loki:
+        endpoint: "http://172.19.0.1:3100/loki/api/v1/push"
+    
+    service:
+      pipelines:
+        logs:
+          receivers:
+            - kubearmor_receiver
+          processors: []
+          exporters:
+            - loki
+            - logging
+
+  env:
+  - name: KUBEARMOR_SERVICE
+    value: kubearmor.kube-system.svc:32767
