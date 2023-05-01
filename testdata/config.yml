@@ -1,0 +1,3 @@
+kubearmor_receiver:
+  endpoint: :32767
+  logfilter: policy
