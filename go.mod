@@ -1,4 +1,4 @@
-module github.com/Chinwendu20/kubearmor_receiver
+module github.com/Chinwendu20/OTel-receiver
 
 go 1.19
 
