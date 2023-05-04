@@ -3,7 +3,7 @@ module github.com/Chinwendu20/OTel-receiver/kubearmor_receiver
 go 1.19
 
 require (
-	github.com/Chinwendu20/OTel-receiver v0.1.1
+	github.com/Chinwendu20/OTel-receiver v0.0.0-00010101000000-000000000000
 	github.com/json-iterator/go v1.1.12
 	github.com/kubearmor/KubeArmor/protobuf v0.0.0-20230426155201-4a0d0af2a5d6
 	github.com/open-telemetry/opentelemetry-collector-contrib/pkg/stanza v0.76.3
@@ -51,4 +51,10 @@ require (
 	google.golang.org/genproto v0.0.0-20230110181048-76db0878b65f // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+)
+
+replace (
+	github.com/Chinwendu20/OTel-receiver => ./
+	github.com/Chinwendu20/OTel-receiver/kubearmor_receiver/stanza_input_operator => ./stanza_input_operator
+
 )
