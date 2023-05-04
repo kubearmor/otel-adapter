@@ -1,4 +1,4 @@
-package kubearmor_receiver
+package stanza_input_operator
 
 //
 //import (

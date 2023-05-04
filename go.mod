@@ -52,8 +52,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace (
-	github.com/Chinwendu20/OTel-receiver => ./
-	github.com/Chinwendu20/OTel-receiver/kubearmor_receiver/stanza_input_operator => ./stanza_input_operator
 
-)
