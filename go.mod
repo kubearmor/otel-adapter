@@ -1,9 +1,8 @@
-module github.com/Chinwendu20/OTel-receiver/kubearmor_receiver
+module github.com/Chinwendu20/OTel-receiver
 
 go 1.19
 
 require (
-	github.com/Chinwendu20/OTel-receiver v0.0.0-00010101000000-000000000000
 	github.com/json-iterator/go v1.1.12
 	github.com/kubearmor/KubeArmor/protobuf v0.0.0-20230426155201-4a0d0af2a5d6
 	github.com/open-telemetry/opentelemetry-collector-contrib/pkg/stanza v0.76.3
