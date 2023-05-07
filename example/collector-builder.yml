@@ -12,7 +12,7 @@ extensions:
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/basicauthextension v0.74.0
 
 receivers:
-  - gomod: github.com/Chinwendu20/kubearmor_receiver v0.0.1
+  - gomod: github.com/Chinwendu20/OTel-receiver/kubearmor_receiver v0.1.4
 
 processors:
   - gomod: go.opentelemetry.io/collector/processor/batchprocessor v0.74.0

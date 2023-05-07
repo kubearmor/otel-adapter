@@ -85,7 +85,7 @@ For this tutorial we would be making use of the minikube kubernetes environment
 
 Note: I have created a container already and have included it in the kubernetes manifest file in this tutorial. You can skip this step if you want and use that instead.
 
-1. Build custom collector docker image. We would be using the [Dockerfile](../Dockerfile) to build the image. Ensure you are in the `example` directory. Run this command:
+1. Build custom collector docker image. We would be using the [Dockerfile](../../Dockerfile) to build the image. Ensure you are in the `example` directory. Run this command:
      ```
      docker build . -t=<docker username>/<image name>
      ```
