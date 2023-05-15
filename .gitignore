@@ -3,3 +3,7 @@ otel-custom
 local_*
 .vscode
 .idea
+multimod
+Makefile
+versions.yaml
+kubearmor_receiver/Makefile
