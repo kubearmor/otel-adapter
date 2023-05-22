@@ -1,3 +1,6 @@
+# Docker-compose file gotten from grafana-loki opentelemetry tutorial:
+#https://grafana.com/docs/opentelemetry/collector/send-logs-to-loki/
+
 version: "3"
 
 networks:

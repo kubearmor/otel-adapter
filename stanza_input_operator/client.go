@@ -11,8 +11,6 @@ import (
 
 // Feeder Structure
 type Feeder struct {
-	// flag
-	Running bool
 
 	// server
 	server string
@@ -36,8 +34,6 @@ type Feeder struct {
 // NewClient Function
 func NewClient(operator helper.InputOperator, cfg Config) (*Feeder, error) {
 	fd := &Feeder{}
-
-	fd.Running = true
 
 	fd.server = cfg.Endpoint
 

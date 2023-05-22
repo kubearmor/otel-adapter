@@ -86,9 +86,8 @@ func (operator *Input) Start(_ operator.Persister) error {
 
 	logfilter := operator.LogFilter
 	logClient := operator.kubearmorClient
-
 	// do healthcheck
-	if ok := logClient.doHealthCheck(operator); !ok {
+	if ok := operator.kubearmorClient.doHealthCheck(operator); !ok {
 		return fmt.Errorf("Failed to check the liveness of the gRPC server")
 	}
 	operator.Logger().Info("Checked the liveness of the gRPC server")
@@ -98,8 +97,8 @@ func (operator *Input) Start(_ operator.Persister) error {
 		operator.wg.Add(1)
 		go func() {
 			defer operator.wg.Done()
-			for logClient.Running {
-				err, log := logClient.recvMsg(operator)
+			for {
+				err, log := operator.kubearmorClient.recvMsg(operator)
 				if err != nil {
 					operator.Logger().Errorf("%s", err.Error())
 					return
@@ -111,7 +110,13 @@ func (operator *Input) Start(_ operator.Persister) error {
 					operator.Logger().Errorf("%s", err.Error())
 					return
 				}
-				operator.Write(ctx, entry)
+				select {
+				case <-ctx.Done():
+					return
+				default:
+					operator.Write(ctx, entry)
+				}
+
 			}
 
 		}()
@@ -122,7 +127,7 @@ func (operator *Input) Start(_ operator.Persister) error {
 		operator.wg.Add(1)
 		go func() {
 			defer operator.wg.Done()
-			for logClient.Running {
+			for {
 				err, log := logClient.recvAlerts(operator)
 				if err != nil {
 					operator.Logger().Errorf("%s", err.Error())
@@ -135,7 +140,13 @@ func (operator *Input) Start(_ operator.Persister) error {
 					operator.Logger().Errorf("%s", err.Error())
 					return
 				}
-				operator.Write(ctx, entry)
+				select {
+				case <-ctx.Done():
+					return
+				default:
+					operator.Write(ctx, entry)
+				}
+
 			}
 
 		}()
@@ -146,8 +157,8 @@ func (operator *Input) Start(_ operator.Persister) error {
 		operator.wg.Add(1)
 		go func() {
 			defer operator.wg.Done()
-			for logClient.Running {
-				err, log := logClient.recvLogs(operator)
+			for {
+				err, log := operator.kubearmorClient.recvLogs(operator)
 				if err != nil {
 					operator.Logger().Errorf("%s", err.Error())
 					return
@@ -159,7 +170,13 @@ func (operator *Input) Start(_ operator.Persister) error {
 					operator.Logger().Errorf("%s", err.Error())
 					return
 				}
-				operator.Write(ctx, entry)
+				//time.Sleep(2 * time.Second)
+				select {
+				case <-ctx.Done():
+					return
+				default:
+					operator.Write(ctx, entry)
+				}
 			}
 		}()
 	}
@@ -200,18 +217,16 @@ func (operator *Input) parseLogEntry(line []byte) (*entry.Entry, error) {
 
 // Stop will stop generating logs.
 func (operator *Input) Stop() error {
-	logClient := operator.kubearmorClient
-	logClient.Running = false
-	time.Sleep(2 * time.Second)
-	if err := logClient.DestroyClient(); err != nil {
+	operator.cancel()
+
+	operator.wg.Wait()
+	if err := operator.kubearmorClient.DestroyClient(); err != nil {
 
 		return fmt.Errorf("Failed to destroy the kubearmor relay gRPC client (%s)\n", err.Error())
 
 	}
 
 	operator.Logger().Info("Destroyed kubearmor relay gRPC client")
-	operator.wg.Wait()
-	operator.cancel()
 	operator.Logger().Info("Stopped kubearmor receiver")
 	return nil
 }
