@@ -3,7 +3,7 @@ This tutorial shows how to export kubearmor telemetry data to grafana using the 
 
 ### Steps
 1. Follow [this tutorial](https://github.com/kubearmor/KubeArmor/blob/ce18fee4f87be7786dc1275aeb94ab7096c8b590/getting-started/deployment_guide.md#L20-L19) to set up Kubearmor
-2. Follow this [tutorial](https://github.com/Chinwendu20/OTel-receiver/blob/otel/example/tutorial.md#create-a-custom-opentelemetry-collector-distribution) to create an opentelemetry custom collector.
+2. Follow this [tutorial](https://github.com/Chinwendu20/OTel-receiver/blob/otel/example/tutorials/tutorial.md#create-a-custom-opentelemetry-collector-distribution) to create an opentelemetry custom collector.
 3. This [tutorial](https://grafana.com/docs/opentelemetry/collector/send-logs-to-loki/) shows how to set up grafana and grafana loki. It also shows how to set up configuration for the collector.
     Note:
     - You would be using the kubearmor receiver for this tutorial. Ensure [this line](https://github.com/Chinwendu20/OTel-receiver/blob/e1b84530dd186b065275156fd80d5c8819295108/example/config.yml#L2-L4) and this [other line](https://github.com/Chinwendu20/OTel-receiver/blob/e1b84530dd186b065275156fd80d5c8819295108/example/config.yml#L13-L14) is in your configuration file.
@@ -17,3 +17,12 @@ This tutorial shows how to export kubearmor telemetry data to grafana using the 
 
 
 ![image](https://user-images.githubusercontent.com/59079323/235289951-6842da6f-a020-4723-81f6-02bae0987d1c.png)
+
+4. To create grafana dashboard use this [JSON file](../grafana_dashboard.json) and follow [this tutorial](https://grafana.com/docs/grafana/latest/dashboards/manage-dashboards/#import-a-dashboard) to import the grafana json on your own server.
+
+[Video of grafana dashboard](https://1drv.ms/v/s!AqdT9dah_scBkD5QWHz--sK7acwZ?e=cmty14)
+
+    Features:
+    - View the amount of each unique value of each log attribute using pie chanrt, guage and table.
+    - Dynamically choose the log attribute that you would like to view using the `log attribute` variable
+    - Filter through logs using `filter` variable.
