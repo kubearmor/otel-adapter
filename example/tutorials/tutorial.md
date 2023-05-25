@@ -18,6 +18,13 @@ We would be creating an opentelemetry collector to test out the receiver. The Op
 
 #### Steps:
 
+> ** Easy Fix **
+> - Pull custom collector container
+> ```
+>  docker run -d --net=host chinwendu20/receiver
+>  ```
+>  No need to follow the steps below if you follow this route
+
 - ##### Create a custom opentelemetry collector distribution.
 
 1. Go to [opentelemetry collector's release page](https://github.com/open-telemetry/opentelemetry-collector/releases), download the "ocb" binary compatible with your system's architecture
@@ -83,7 +90,7 @@ For this tutorial we would be making use of the minikube kubernetes environment
 
 - Create custom collector container
 
-Note: I have created a container already and have included it in the kubernetes manifest file in this tutorial. You can skip this step if you want and use that instead.
+**Note: I have created a container already and have included it in the kubernetes manifest file in this tutorial. You can skip this step if you want and use that instead. Go to step [4](#Deploy-the-collector-in-your-cluster)**
 
 1. Build custom collector docker image. We would be using the [Dockerfile](../../Dockerfile) to build the image. Ensure you are in the `example` directory. Run this command:
      ```
@@ -99,7 +106,7 @@ docker push <docker username>/<image name>
 ```
 3. Replace the container name in this [line](../collector-k8-manifest.yml) with your container name.
 
-4. Deploy the collector in your cluster
+4. #### Deploy the collector in your cluster
 
 ```bash
 kubectl apply -f collector-k8-manifest.yml
