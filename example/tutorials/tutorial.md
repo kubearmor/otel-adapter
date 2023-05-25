@@ -1,12 +1,5 @@
 ### INTRODUCTION
 
-This document describes how to test out the otel_Kubearmor_receiver. There are two ways to deploy kubearmor, on bare metal and in a kubernetes environment.
-I would be explaining the two ways in which you can try out this example in both environments.
-
-### KUBEAMOR ON BARE METAL
-
-#### Requirements:
-
 We would be creating an opentelemetry collector to test out the receiver. The OpenTelemetry Collector offers a vendor-agnostic implementation of how to receive, process and export telemetry data. Read more about it in the [docs](https://opentelemetry.io/docs/collector/). There are different versions:
 
 1. [Collector-core collector](https://github.com/open-telemetry/opentelemetry-collector)
@@ -15,6 +8,14 @@ We would be creating an opentelemetry collector to test out the receiver. The Op
     This consists of a growing number of components contributed by the community, observability vendors and any one in general with a need to create custom components for a specific use,
 3. Custom collector
    This is created by users for specific use case. Only needed components are included, unneeded ones are not included. Custom collectors can easily be created using the [opentelemetry collector builder](https://github.com/open-telemetry/opentelemetry-collector/tree/main/cmd/builder). This is what we would be using for our tutorial.
+
+This document describes how to test out the Kubearmor_receiver. There are two ways to deploy kubearmor, on bare metal and in a kubernetes environment.
+Therefore, I would be explaining how to deploy the collector in both environments.
+
+> Ensure Kubearmor is running to successfully run the collector.
+> - [Kubearmor deployment tutorial](https://github.com/kubearmor/KubeArmor/blob/ce18fee4f87be7786dc1275aeb94ab7096c8b590/getting-started/kubearmor_vm.md)
+> - [KubeArmor in k8s tutorial](https://github.com/kubearmor/KubeArmor/blob/ce18fee4f87be7786dc1275aeb94ab7096c8b590/getting-started/deployment_guide.md)
+### COLLECTOR ON BARE METAL
 
 #### Steps:
 
@@ -71,9 +72,7 @@ Note:
 
 Examine the logs to see that it is properly running.
 
-### KUBEAMOR ON KUBERNETES ENVIRONMENT
-
-For this tutorial we would be making use of the minikube kubernetes environment
+### COLLECTOR ON KUBERNETES ENVIRONMENT
 
 #### Steps:
 - ##### Follow [previous step](https://github.com/Chinwendu20/OTel-receiver/blob/otel/example/tutorial.md#create-a-custom-opentelemetry-collector-distribution) on creating custom opentelemetry collector.
