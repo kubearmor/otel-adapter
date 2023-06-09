@@ -1,7 +1,7 @@
 apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
-  name: simplest
+  name: kubearmor-collector
 spec:
   image: chinwendu20/receiver
   config: |
