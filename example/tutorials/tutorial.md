@@ -69,13 +69,13 @@ Run the command below:
 Note: 
 - Please replace /path/to/otel-custom with the actual path to the otel-custom binary you downloaded
 - The config.yml file is located in this repo at /example/config.yml. Use the actual path as the value to --config flag
-
+.
 Examine the logs to see that it is properly running.
 
 ### COLLECTOR ON KUBERNETES ENVIRONMENT
 
 #### Steps:
-- ##### Follow [previous step](https://github.com/Chinwendu20/OTel-receiver/blob/otel/example/tutorial.md#create-a-custom-opentelemetry-collector-distribution) on creating custom opentelemetry collector.
+- ##### Follow [previous step](#create-a-custom-opentelemetry-collector-distribution) on creating custom opentelemetry collector.
 - ##### Follow the steps in this [markdown](https://github.com/kubearmor/KubeArmor/tree/main/deployments/k3s) to deploy kubearmor in k3s environemnt
 - ##### Install opentelemetry operator. Follow these steps:
 
