@@ -1,0 +1,17 @@
+receivers:
+  kubearmor_receiver:
+    endpoint: :32767
+    logfilter: all
+
+exporters:
+  logging:
+    verbosity: detailed
+
+service:
+  pipelines:
+    logs:
+      receivers:
+        - kubearmor_receiver
+      processors: []
+      exporters:
+        - logging

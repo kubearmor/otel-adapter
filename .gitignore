@@ -1,0 +1,10 @@
+ocb_*
+otel-custom
+local_*
+.vscode
+.idea
+kubearmor_receiver/Makefile
+Makefile
+multimod
+versions.yaml
+
