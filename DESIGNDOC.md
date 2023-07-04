@@ -43,8 +43,8 @@ kubearmorreceiver:
     
 ```
 ### Design
-![image](https://github.com/Chinwendu20/OTel-receiver/assets/59079323/df39646b-02ba-424e-bd4b-203dd15ec9ca)
 
+![image](https://github.com/kubearmor/OTel-receiver/assets/59079323/74db3b70-f599-44d0-8443-a1653c60fad9)
 
  
 
