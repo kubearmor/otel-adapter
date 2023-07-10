@@ -3,19 +3,19 @@ kind: OpenTelemetryCollector
 metadata:
   name: kubearmor-collector
 spec:
-  image: chinwendu20/receiver
+  image: kubearmor/otel-receiver
   config: |
     receivers:
       kubearmor_receiver:
         logfilter: all
-    
+
     exporters:
       logging:
         verbosity: detailed
       loki:
         endpoint: "http://172.19.0.1:3100/loki/api/v1/push"
-    
-    
+
+
     service:
       pipelines:
         logs:

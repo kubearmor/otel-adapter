@@ -1,7 +1,7 @@
 package kubearmor_receiver
 
 import (
-	input_operator "github.com/Chinwendu20/OTel-receiver/stanza_input_operator"
+	input_operator "github.com/kubearmor/OTel-receiver/stanza_input_operator"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/pkg/stanza/operator"
 	"go.opentelemetry.io/collector/component"
 	"go.opentelemetry.io/collector/receiver"

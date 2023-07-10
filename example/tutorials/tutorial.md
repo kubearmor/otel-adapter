@@ -22,7 +22,7 @@ Therefore, I would be explaining how to deploy the collector in both environment
 > ** Easy Fix **
 > - Pull custom collector container
 > ```
->  docker run -d --net=host chinwendu20/receiver
+>  docker run -d --net=host `kubearmor/otel-receiver`
 >  ```
 >  No need to follow the steps below if you follow this route
 
