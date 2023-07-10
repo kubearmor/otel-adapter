@@ -1,4 +1,4 @@
-module github.com/Chinwendu20/OTel-receiver/stanza_input_operator
+module github.com/kubearmor/OTel-receiver/stanza_input_operator
 
 go 1.20
 
@@ -37,4 +37,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace github.com/Chinwendu20/OTel-receiver/kubearmor_receiver => ../kubearmor_receiver
+replace github.com/kubearmor/OTel-receiver/kubearmor_receiver => ../kubearmor_receiver

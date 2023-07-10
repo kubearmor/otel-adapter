@@ -1,9 +1,9 @@
-module github.com/Chinwendu20/OTel-receiver/kubearmor_receiver
+module github.com/kubearmor/OTel-receiver/kubearmor_receiver
 
 go 1.20
 
 require (
-	github.com/Chinwendu20/OTel-receiver/stanza_input_operator v0.0.0-00010101000000-000000000000
+	github.com/kubearmor/OTel-receiver/stanza_input_operator v0.0.0-00010101000000-000000000000
 	github.com/open-telemetry/opentelemetry-collector-contrib/pkg/stanza v0.76.3
 	github.com/stretchr/testify v1.8.2
 	go.opentelemetry.io/collector/component v0.76.1
@@ -51,4 +51,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace github.com/Chinwendu20/OTel-receiver/stanza_input_operator => ../stanza_input_operator
+replace github.com/kubearmor/OTel-receiver/stanza_input_operator => ../stanza_input_operator
