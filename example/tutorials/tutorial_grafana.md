@@ -6,9 +6,9 @@ This tutorial shows how to export kubearmor telemetry data to grafana using the 
 2. Follow this [tutorial](./tutorial.md#create-a-custom-opentelemetry-collector-distribution) to create an opentelemetry custom collector (there is a docker container already for the collector)
 3. This [tutorial](https://grafana.com/docs/opentelemetry/collector/send-logs-to-loki/) shows how to set up grafana and grafana loki. It also shows how to set up configuration for the collector.
     Note:
-    - You would be using the kubearmor receiver for this tutorial. Ensure [this line](https://github.com/Chinwendu20/OTel-receiver/blob/e1b84530dd186b065275156fd80d5c8819295108/example/config.yml#L2-L4) and this [other line](https://github.com/Chinwendu20/OTel-receiver/blob/e1b84530dd186b065275156fd80d5c8819295108/example/config.yml#L13-L14) is in your configuration file.
-    - For kubearmor kubernetes deployment, you can make use of [this file](../collector-k8-manifest.yml) for the collector configuration. Replace in this [line](https://github.com/Chinwendu20/OTel-receiver/blob/e1b84530dd186b065275156fd80d5c8819295108/example/collector-k8-manifest.yml#L16) [your](#loki-endpoint) loki endpoint. 
-    - For Kubearmor bare metal deployment, you can make use of [this file](../config.yml) for deployment. Add the loki exporter by adding [this line](https://github.com/Chinwendu20/OTel-receiver/blob/e1b84530dd186b065275156fd80d5c8819295108/example/collector-k8-manifest.yml#L15-L16) and [this line](https://github.com/Chinwendu20/OTel-receiver/blob/e1b84530dd186b065275156fd80d5c8819295108/example/collector-k8-manifest.yml#L25) to the file. Replace loki endpoint with [yours](#loki-endpoint)
+    - You would be using the kubearmor receiver for this tutorial. Ensure [this line](../config.yml#L2-L4) and this [other line](../config.yml#L13-L14) is in your configuration file.
+    - For kubearmor kubernetes deployment, you can make use of [this file](../collector-k8-manifest.yml) for the collector configuration. Replace in this [line](../collector-k8-manifest.yml#L16) [your](#loki-endpoint) loki endpoint. 
+    - For Kubearmor bare metal deployment, you can make use of [this file](../config.yml) for deployment. Add the loki exporter by adding [this line](../collector-k8-manifest.yml#L15-L16) and [this line](../collector-k8-manifest.yml#L25) to the file. Replace loki endpoint with [yours](#loki-endpoint)
 
 
 > ###### Loki endpoint
