@@ -2,19 +2,22 @@ apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
   name: kubearmor-collector
+  namespace: kube-system
+    #namespace: kubearmor
 spec:
-  image: kubearmor/otel-receiver
+  image: kubearmor/otel-receiver:latest
+  imagePullPolicy: Always
   config: |
     receivers:
       kubearmor_receiver:
-        logfilter: all
+        endpoint: ${env:KUBEARMOR_SERVICE?default=kubearmor:32767}
+        logfilter: ${env:LOGFILTER?default=all}
 
     exporters:
       logging:
         verbosity: detailed
       loki:
         endpoint: "http://172.19.0.1:3100/loki/api/v1/push"
-
 
     service:
       pipelines:
@@ -25,7 +28,6 @@ spec:
           exporters:
             - loki
             - logging
-
   env:
   - name: KUBEARMOR_SERVICE
-    value: kubearmor.kube-system.svc:32767
+    value: kubearmor:32767

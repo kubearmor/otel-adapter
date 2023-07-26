@@ -1,7 +1,7 @@
 receivers:
   kubearmor_receiver:
-    endpoint: :32767
-    logfilter: all
+    endpoint: ${env:KUBEARMOR_SERVICE?default=:32767}
+    logfilter: ${env:LOGFILTER?default=all}
 
 exporters:
   logging:

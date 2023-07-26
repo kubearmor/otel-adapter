@@ -28,6 +28,9 @@ func NewConfig() *Config {
 }
 
 // NewConfigWithID creates a new input config with default values
+// NOTE: The config passed from here gets overwritten by values in the config
+// file. So, override is handled by env variable expansion in collector
+// configuration.
 func NewConfigWithID(operatorID string) *Config {
 	var gRPC string
 	if val, ok := os.LookupEnv("KUBEARMOR_SERVICE"); ok {
