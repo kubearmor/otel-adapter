@@ -1,119 +1,97 @@
-### INTRODUCTION
+## INTRODUCTION
 
-We would be creating an opentelemetry collector to test out the receiver. The OpenTelemetry Collector offers a vendor-agnostic implementation of how to receive, process and export telemetry data. Read more about it in the [docs](https://opentelemetry.io/docs/collector/). There are different versions:
+We would be creating an OpenTelemetry collector to test out the receiver. The OpenTelemetry Collector offers a vendor-agnostic implementation of how to receive, process and export telemetry data. Read more about it in the [docs](https://opentelemetry.io/docs/collector/). There are different versions:
 
 1. [Collector-core collector](https://github.com/open-telemetry/opentelemetry-collector)
-   The components that are a part of this collector are fixed that i.e. components are not contributed to this collector. It is maintained by the opentelemetry community
+   The components that are a part of this collector are fixed that i.e. components are not contributed to this collector. It is maintained by the OpenTelemetry community
 2. [Collector contrib collector](https://github.com/open-telemetry/opentelemetry-collector-contrib)
-    This consists of a growing number of components contributed by the community, observability vendors and any one in general with a need to create custom components for a specific use,
+   This consists of a growing number of components contributed by the community, observability vendors and any one in general with a need to create custom components for a specific use,
 3. Custom collector
-   This is created by users for specific use case. Only needed components are included, unneeded ones are not included. Custom collectors can easily be created using the [opentelemetry collector builder](https://github.com/open-telemetry/opentelemetry-collector/tree/main/cmd/builder). This is what we would be using for our tutorial.
+   This is created by users for specific use case. Only needed components are included, unneeded ones are not included. Custom collectors can easily be created using the [OpenTelemetry collector builder](https://github.com/open-telemetry/opentelemetry-collector/tree/main/cmd/builder). This is what we would be using for our tutorial.
 
-This document describes how to test out the Kubearmor_receiver. There are two ways to deploy kubearmor, on bare metal and in a kubernetes environment.
-Therefore, I would be explaining how to deploy the collector in both environments.
+This document describes how to test out the `kubearmor_receiver`. There are two ways to deploy kubearmor, on bare metal and in a kubernetes environment. Therefore, we will be explaining how to deploy the collector in both environments.
 
-> Ensure Kubearmor is running to successfully run the collector.
-> - [Kubearmor deployment tutorial](https://github.com/kubearmor/KubeArmor/blob/ce18fee4f87be7786dc1275aeb94ab7096c8b590/getting-started/kubearmor_vm.md)
-> - [KubeArmor in k8s tutorial](https://github.com/kubearmor/KubeArmor/blob/ce18fee4f87be7786dc1275aeb94ab7096c8b590/getting-started/deployment_guide.md)
-### COLLECTOR ON BARE METAL
+## PREREQUISITES
+Install Kubearmor:
+- [KubeArmor in K8s tutorial](https://github.com/kubearmor/KubeArmor/blob/main/getting-started/deployment_guide.md)
+- [Kubearmor bare metal deployment tutorial](https://github.com/kubearmor/KubeArmor/blob/main/getting-started/kubearmor_vm.md)
 
-#### Steps:
+## INSTALL THE COLLECTOR
+Depending on your deployment mode, you can follow:
+* [Collector in Kubernetes](#collector-in-kubernetes-environment)
+* [Collector on bare metal](#collector-on-bare-metal)
 
-> ** Easy Fix **
-> - Pull custom collector container
-> ```
->  docker run -d --net=host `kubearmor/otel-receiver`
->  ```
->  No need to follow the steps below if you follow this route
+### COLLECTOR IN KUBERNETES ENVIRONMENT
 
-- ##### Create a custom opentelemetry collector distribution.
+#### Prerequisites
+1. Ensure [cert-manager is installed](https://cert-manager.io/docs/installation/) in your cluster.
+2. Deploy the [OpenTelemetry operator](https://github.com/open-telemetry/opentelemetry-operator):
+   ```bash
+   kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
+   ```
 
-1. Go to [opentelemetry collector's release page](https://github.com/open-telemetry/opentelemetry-collector/releases), download the "ocb" binary compatible with your system's architecture
-
-2. Use the collector builder to create the custom collector
-
-Note: Take a look at the [collector-builder.yml](../collector-builder.yml). Note that we have included the kubearmor receiver under the receivers map.
-
-Run the command below:
-
+#### Run pre-built OpenTelemetry collector in K8s
+If you want to skip building the collector yourself, deploy the [example manifest](../collector-k8-manifest.yml) which pulls pre-built `kubearmor/otel-receiver` image:
 ```bash
-/path/to/ocb/binary --config=collector-builder.yml
-
+kubectl apply -f example/collector-k8-manifest.yml
 ```
 
-Note: 
-- Please replace /path/to/ocb/binary with the actual path to the ocb binary you downloaded
-- The collector-builder.ymlfile is located in this repo at /example/collector-builder.yml. Use the actual path as the value to --config flag
-
-If everything went correctly, you should have an otel-custom folder containing an otel-custom binary. That is our collector distribution. We may proceed to testing the collector.
-
-Note: This step is important as the binary compiled by ocb would not work in the container
-3. Create collector binary
-
-```bash
-cd otel-custom
-GO111MODULE=on CGO_ENABLED=0 go build .
-
-```
-- ##### Testing the kubearmor receiver in the collector distribution
-
-1. Run the collector
-
-Run the command below:
-
-```bash
-/path/to/otel-custom --config=config.yml
-
-```
-
-Note: 
-- Please replace /path/to/otel-custom with the actual path to the otel-custom binary you downloaded
-- The config.yml file is located in this repo at /example/config.yml. Use the actual path as the value to --config flag
-.
-Examine the logs to see that it is properly running.
-
-### COLLECTOR ON KUBERNETES ENVIRONMENT
-
-#### Steps:
-- ##### Follow [previous step](#create-a-custom-opentelemetry-collector-distribution) on creating custom opentelemetry collector.
-- ##### Follow the steps in this [markdown](https://github.com/kubearmor/KubeArmor/tree/main/deployments/k3s) to deploy kubearmor in k3s environemnt
-- ##### Install opentelemetry operator. Follow these steps:
-
-1. Ensure [cert manager is installed](https://cert-manager.io/docs/installation/) in the cluster.
-2. Deploy the operator:
-
-```bash
-    kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
-```
-(Reference: [Opentelemetry operator readme](https://github.com/open-telemetry/opentelemetry-operator))
-
-- Create custom collector container
-
-**Note: I have created a container already and have included it in the kubernetes manifest file in this tutorial. You can skip this step if you want and use that instead. Go to step [4](#Deploy-the-collector-in-your-cluster)**
-
-1. Build custom collector docker image. We would be using the [Dockerfile](../../Dockerfile) to build the image. Ensure you are in the `example` directory. Run this command:
-     ```
-     docker build . -t=<docker username>/<image name>
-     ```
-     Note: Replace `docker username ` with your docker username and `image name` with your preferred image name.
-    
+#### Build and install OpenTelemetry collector in K8s
+1. Build custom collector docker image. We would be using the [Dockerfile](../../../Dockerfile) to build the image.
+   ```bash
+   docker build -t=<docker username>/<image name> .
+   ```
+   Note: Replace `docker username ` with your docker username and `image name` with your preferred image name.
 2. Push to docker hub:
-
-```
-docker push <docker username>/<image name>
-
-```
-3. Replace the container name in this [line](../collector-k8-manifest.yml) with your container name.
-
-4. #### Deploy the collector in your cluster
-
-```bash
-kubectl apply -f collector-k8-manifest.yml
-```
+   ```bash
+   docker push <docker username>/<image name>
+   ```
+3. Replace the `image` in the example [K8s manifest](../collector-k8-manifest.yml) accordingly.
+4. Deploy the collector in your cluster
+   ```bash
+   kubectl apply -f example/collector-k8-manifest.yml
+   ```
 5. View the logs of the container to note that it runs fine.
 
-### OpenTelemetry KubeArmor Logs pattern
 
+### COLLECTOR ON BARE METAL
+
+#### Run pre-built OpeneTelemetry collector
+If you want to skip building the example collector yoursleves, you can use the pre-built one with:
+```bash
+docker run -d --net=host --name=kubearmor-otel-receiver kubearmor/otel-receiver
+```
+
+#### Build a custom OpenTelemetry collector distribution.
+1. Go to [OpenTelemetry collector's release page](https://github.com/open-telemetry/opentelemetry-collector/releases), download the "ocb" binary compatible with your system's architecture.
+   Alternatively, if you have Go installed on your system, you can get the latest ocb binary with:
+   ```bash
+   GO111MODULE=on go install go.opentelemetry.io/collector/cmd/builder@latest
+   ```
+
+2. Use the collector builder to create the custom collector.
+   Note: Take a look at the [collector-builder.yml](../collector-builder.yml). Note that we have included the kubearmor receiver under the receivers map.
+   Run the command below:
+   ```bash
+   GO111MODULE=on CGO_ENABLED=0 /path/to/ocb/binary --config=collector-builder.yml
+   ```
+   Note:
+   - `/path/to/ocb/binary` is path to the ocb binary you downloaded.
+   - `collector-builder.yml` file is located in this repo at `/example/collector-builder.yml`.
+
+   If everything went correctly, you should have an `otel-custom` folder containing an otel-custom binary. That is our collector distribution. We may proceed to testing the collector.
+
+##### Run the built collector
+Run the collector with:
+```bash
+/path/to/otel-custom --config=config.yml
+```
+Note:
+- `/path/to/otel-custom` is the path to the otel-custom binary built in previous step
+- `config.yml` file is located in this repo at `/example/config.yml`. Use the actual path as the value to --config flag.
+Examine the logs to see that it is properly running.
+
+## OpenTelemetry KubeArmor Logs pattern
 ```log
 {"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1679915426000","observedTimeUnixNano":"1679915426487671942","body":{"kvlistValue":{"values":[{"key":"HostPID","value":{"doubleValue":261}},{"key":"PPID","value":{"doubleValue":1}},{"key":"Operation","value":{"stringValue":"File"}},{"key":"Resource","value":{"stringValue":"/var/log/journal/b09389c7d40f420982b5facb1f6e1686"}},{"key":"Data","value":{"stringValue":"syscall=SYS_OPENAT fd=-100 flags=O_RDONLY|O_NONBLOCK|O_DIRECTORY|O_CLOEXEC"}},{"key":"Result","value":{"stringValue":"Passed"}},{"key":"UpdatedTime","value":{"stringValue":"2023-03-27T11:10:26.485913Z"}},{"key":"HostName","value":{"stringValue":"babe-chinwendum"}},{"key":"PID","value":{"doubleValue":261}},{"key":"Type","value":{"stringValue":"HostLog"}},{"key":"Source","value":{"stringValue":"/usr/lib/systemd/systemd-journald"}}]}},"traceId":"","spanId":""}]}]}]}
 {"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1679915426000","observedTimeUnixNano":"1679915426771337238","body":{"kvlistValue":{"values":[{"key":"Resource","value":{"stringValue":"/home/chinwendu/.local/share/JetBrains/consentOptions/accepted"}},{"key":"Result","value":{"stringValue":"Passed"}},{"key":"HostPID","value":{"doubleValue":9527}},{"key":"PID","value":{"doubleValue":9527}},{"key":"UID","value":{"doubleValue":1000}},{"key":"PPID","value":{"doubleValue":2396}},{"key":"Type","value":{"stringValue":"HostLog"}},{"key":"Source","value":{"stringValue":"/snap/goland/224/jbr/bin/java"}},{"key":"Operation","value":{"stringValue":"File"}},{"key":"Data","value":{"stringValue":"syscall=SYS_OPENAT fd=-100 flags=O_RDONLY"}},{"key":"UpdatedTime","value":{"stringValue":"2023-03-27T11:10:26.770893Z"}},{"key":"HostName","value":{"stringValue":"babe-chinwendum"}}]}},"traceId":"","spanId":""}]}]}]}
@@ -125,5 +103,4 @@ kubectl apply -f collector-k8-manifest.yml
 {"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1679915430000","observedTimeUnixNano":"1679915430017628140","body":{"kvlistValue":{"values":[{"key":"UID","value":{"doubleValue":1000}},{"key":"Type","value":{"stringValue":"HostLog"}},{"key":"Data","value":{"stringValue":"syscall=SYS_CONNECT fd=43"}},{"key":"Source","value":{"stringValue":"/opt/google/chrome/chrome"}},{"key":"Operation","value":{"stringValue":"Network"}},{"key":"UpdatedTime","value":{"stringValue":"2023-03-27T11:10:30.017141Z"}},{"key":"HostName","value":{"stringValue":"babe-chinwendum"}},{"key":"HostPID","value":{"doubleValue":9811}},{"key":"PPID","value":{"doubleValue":9663}},{"key":"PID","value":{"doubleValue":9811}},{"key":"Resource","value":{"stringValue":"sa_family=AF_INET sin_port=443 sin_addr=142.250.187.202"}},{"key":"Result","value":{"stringValue":"Passed"}}]}},"traceId":"","spanId":""}]}]}]}
 {"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1679915430000","observedTimeUnixNano":"1679915430773698408","body":{"kvlistValue":{"values":[{"key":"Resource","value":{"stringValue":"/home/chinwendu/.local/share/JetBrains/consentOptions/accepted"}},{"key":"HostName","value":{"stringValue":"babe-chinwendum"}},{"key":"HostPID","value":{"doubleValue":9527}},{"key":"Type","value":{"stringValue":"HostLog"}},{"key":"Source","value":{"stringValue":"/snap/goland/224/jbr/bin/java"}},{"key":"Operation","value":{"stringValue":"File"}},{"key":"UpdatedTime","value":{"stringValue":"2023-03-27T11:10:30.772846Z"}},{"key":"PPID","value":{"doubleValue":2396}},{"key":"PID","value":{"doubleValue":9527}},{"key":"UID","value":{"doubleValue":1000}},{"key":"Data","value":{"stringValue":"syscall=SYS_OPENAT fd=-100 flags=O_RDONLY"}},{"key":"Result","value":{"stringValue":"Passed"}}]}},"traceId":"","spanId":""}]}]}]}
 {"resourceLogs":[{"resource":{},"scopeLogs":[{"scope":{},"logRecords":[{"timeUnixNano":"1679915431000","observedTimeUnixNano":"1679915431273738373","body":{"kvlistValue":{"values":[{"key":"Type","value":{"stringValue":"HostLog"}},{"key":"Source","value":{"stringValue":"/snap/goland/224/jbr/bin/java"}},{"key":"Operation","value":{"stringValue":"File"}},{"key":"Resource","value":{"stringValue":"/home/chinwendu/.local/share/JetBrains/consentOptions/accepted"}},{"key":"Data","value":{"stringValue":"syscall=SYS_OPENAT fd=-100 flags=O_RDONLY"}},{"key":"HostPID","value":{"doubleValue":9527}},{"key":"PPID","value":{"doubleValue":2396}},{"key":"PID","value":{"doubleValue":9527}},{"key":"UID","value":{"doubleValue":1000}},{"key":"Result","value":{"stringValue":"Passed"}},{"key":"UpdatedTime","value":{"stringValue":"2023-03-27T11:10:31.272970Z"}},{"key":"HostName","value":{"stringValue":"babe-chinwendum"}}]}},"traceId":"","spanId":""},{"timeUnixNano":"1679915431000","observedTimeUnixNano":"1679915431359445575","body":{"kvlistValue":{"values":[{"key":"UpdatedTime","value":{"stringValue":"2023-03-27T11:10:31.358770Z"}},{"key":"PPID","value":{"doubleValue":9663}},{"key":"Type","value":{"stringValue":"HostLog"}},{"key":"Operation","value":{"stringValue":"File"}},{"key":"Resource","value":{"stringValue":"/shm/.com.google.Chrome.60n9lZ"}},{"key":"Data","value":{"stringValue":"syscall=SYS_OPENAT fd=-100 flags=O_RDWR|O_CREAT|O_EXCL"}},{"key":"Result","value":{"stringValue":"Passed"}},{"key":"HostName","value":{"stringValue":"babe-chinwendum"}},{"key":"HostPID","value":{"doubleValue":9811}},{"key":"PID","value":{"doubleValue":9811}},{"key":"UID","value":{"doubleValue":1000}},{"key":"Source","value":{"stringValue":"/opt/google/chrome/chrome"}}]}},"traceId":"","spanId":""}]}]}]}
-
 ```
