@@ -12,18 +12,18 @@ ENV CGO_ENABLED=0
 RUN go install go.opentelemetry.io/collector/cmd/builder@latest
 RUN builder --config=example/collector-builder.yml
 
-FROM alpine
+FROM scratch
 
 ARG USER_UID=10001
 
 USER ${USER_UID}
 
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
-COPY --from=builder /build/otel-custom/otelcol-custom /builder
+COPY --from=builder /build/otel-custom/otelcol-custom /otelcol
 
-COPY ./example/config.yml /otelcol-custom/config.yaml
+COPY ./example/config.yml /otelcol-custom/config.yml
 
 EXPOSE 4317 55678 55679
 
-ENTRYPOINT ["/builder"]
-CMD ["--config", "/otelcol-custom/config.yaml"]
+ENTRYPOINT ["/otelcol"]
+CMD ["--config", "/otelcol-custom/config.yml"]

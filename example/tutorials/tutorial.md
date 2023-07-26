@@ -73,22 +73,22 @@ docker run -d --net=host --name=kubearmor-otel-receiver kubearmor/otel-receiver
    Note: Take a look at the [collector-builder.yml](../collector-builder.yml). Note that we have included the kubearmor receiver under the receivers map.
    Run the command below:
    ```bash
-   GO111MODULE=on CGO_ENABLED=0 /path/to/ocb/binary --config=collector-builder.yml
+   GO111MODULE=on CGO_ENABLED=0 /path/to/ocb/binary --config=example/collector-builder.yml
    ```
    Note:
    - `/path/to/ocb/binary` is path to the ocb binary you downloaded.
-   - `collector-builder.yml` file is located in this repo at `/example/collector-builder.yml`.
+   - `collector-builder.yml` file is located in this repo at `example/collector-builder.yml`.
 
    If everything went correctly, you should have an `otel-custom` folder containing an otel-custom binary. That is our collector distribution. We may proceed to testing the collector.
 
 ##### Run the built collector
 Run the collector with:
 ```bash
-/path/to/otel-custom --config=config.yml
+/path/to/otel-custom --config=example/config.yml
 ```
 Note:
 - `/path/to/otel-custom` is the path to the otel-custom binary built in previous step
-- `config.yml` file is located in this repo at `/example/config.yml`. Use the actual path as the value to --config flag.
+- `config.yml` file is located in this repo at `example/config.yml`.
 Examine the logs to see that it is properly running.
 
 ## OpenTelemetry KubeArmor Logs pattern
