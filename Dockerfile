@@ -23,7 +23,5 @@ COPY --from=builder /build/otel-custom/otelcol-custom /otelcol
 
 COPY ./example/config.yml /otelcol-custom/config.yml
 
-EXPOSE 4317 55678 55679
-
 ENTRYPOINT ["/otelcol"]
 CMD ["--config", "/otelcol-custom/config.yml"]

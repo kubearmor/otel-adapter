@@ -6,6 +6,7 @@ metadata:
     #namespace: kubearmor
 spec:
   image: kubearmor/otel-receiver:latest
+  mode: daemonset
   imagePullPolicy: Always
   config: |
     receivers:
@@ -17,7 +18,7 @@ spec:
       logging:
         verbosity: detailed
       loki:
-        endpoint: "http://172.19.0.1:3100/loki/api/v1/push"
+        endpoint: "http://loki.default.svc:3100/loki/api/v1/push"
 
     service:
       pipelines:

@@ -6,6 +6,9 @@ receivers:
 exporters:
   logging:
     verbosity: detailed
+  # uncomment for exporting to Loki
+  #loki:
+  #  endpoint: "http://localhost:3100/loki/api/v1/push"
 
 service:
   pipelines:
@@ -15,3 +18,5 @@ service:
       processors: []
       exporters:
         - logging
+        # uncomment for exporting to Loki
+        #- loki

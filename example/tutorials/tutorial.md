@@ -25,7 +25,7 @@ Depending on your deployment mode, you can follow:
 
 #### Prerequisites
 1. Ensure [cert-manager is installed](https://cert-manager.io/docs/installation/) in your cluster.
-2. Deploy the [OpenTelemetry operator](https://github.com/open-telemetry/opentelemetry-operator):
+2. Wait for a few minutes till cert-manager gets ready and then deploy the [OpenTelemetry operator](https://github.com/open-telemetry/opentelemetry-operator):
    ```bash
    kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
    ```
@@ -47,12 +47,27 @@ kubectl apply -f example/collector-k8-manifest.yml
    docker push <docker username>/<image name>
    ```
 3. Replace the `image` in the example [K8s manifest](../collector-k8-manifest.yml) accordingly.
-4. Deploy the collector in your cluster
+4. Deploy the collector **as a daemonset** in your cluster
    ```bash
    kubectl apply -f example/collector-k8-manifest.yml
    ```
-5. View the logs of the container to note that it runs fine.
+   Checkout other [deployment patterns](https://opentelemetry.io/docs/collector/deployment/) for OpenTelemetry collectors.
+5. View the logs of the daemonset to check if it runs fine.
+    ```bash
+    kubectl logs -n kube-system ds/kubearmor-collector-collector -f
+    ```
 
+#### Cleanup
+```bash
+# delete the collector
+kubectl delete -f example/collector-k8-manifest.yml
+
+# delete the OpenTelemetry operator
+kubectl delete -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
+
+# delete cert-manager
+kubectl delete -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml
+```
 
 ### COLLECTOR ON BARE METAL
 
@@ -90,6 +105,12 @@ Note:
 - `/path/to/otel-custom` is the path to the otel-custom binary built in previous step
 - `config.yml` file is located in this repo at `example/config.yml`.
 Examine the logs to see that it is properly running.
+
+#### Cleanup
+```bash
+# stop and remove the collector container
+docker stop kubearmor-otel-receiver; docker rm kubearmor-otel-receiver
+```
 
 ## OpenTelemetry KubeArmor Logs pattern
 ```log

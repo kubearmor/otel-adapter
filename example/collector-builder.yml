@@ -11,6 +11,7 @@ exporters:
 
 extensions:
 - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/basicauthextension v0.81.0
+- gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/headerssetterextension v0.81.0
 
 receivers:
 - gomod: github.com/kubearmor/OTel-receiver/kubearmor_receiver latest
