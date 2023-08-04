@@ -3,10 +3,11 @@ package stanza_input_operator
 import (
 	"context"
 	"fmt"
+	"math/rand"
+
 	pb "github.com/kubearmor/KubeArmor/protobuf"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/pkg/stanza/operator/helper"
 	"google.golang.org/grpc"
-	"math/rand"
 )
 
 // Feeder Structure

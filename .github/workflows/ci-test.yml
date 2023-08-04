@@ -1,0 +1,36 @@
+name: ci-test
+
+on:
+  push:
+    paths:
+      - "example/**"
+      - "kubearmor_receiver/**"
+      - "stanza_input_operator/**"
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - "example/**"
+      - "kubearmor_receiver/**"
+      - "stanza_input_operator/**"
+
+jobs:
+  build:
+    name: Build & test otel-receiver
+    if: github.repository == 'kubearmor/otel-receiver'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version: "v1.20"
+
+      - name: Build otel-receiver
+        env:
+          GO111MODULE: on
+          CGO_ENABLED: 0
+        run: |
+          go install go.opentelemetry.io/collector/cmd/builder@latest
+          builder --config=example/collector-builder.yml

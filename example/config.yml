@@ -1,11 +1,14 @@
 receivers:
   kubearmor_receiver:
-    endpoint: :32767
-    logfilter: all
+    endpoint: ${env:KUBEARMOR_SERVICE?default=:32767}
+    logfilter: ${env:LOGFILTER?default=all}
 
 exporters:
   logging:
     verbosity: detailed
+  # uncomment for exporting to Loki
+  #loki:
+  #  endpoint: "http://localhost:3100/loki/api/v1/push"
 
 service:
   pipelines:
@@ -15,3 +18,5 @@ service:
       processors: []
       exporters:
         - logging
+        # uncomment for exporting to Loki
+        #- loki

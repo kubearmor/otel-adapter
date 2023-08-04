@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_LOKI-1",
-      "label": "Loki-1",
+      "name": "DS_LOKI",
+      "label": "Loki",
       "description": "",
       "type": "datasource",
       "pluginId": "loki",
@@ -87,7 +87,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "${DS_LOKI-1}"
+        "uid": "${DS_LOKI}"
       },
       "gridPos": {
         "h": 8,
@@ -110,7 +110,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "${DS_LOKI-1}"
+            "uid": "${DS_LOKI}"
           },
           "editorMode": "builder",
           "expr": "{exporter=\"OTLP\"} | json | __error__=``",
@@ -125,7 +125,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "${DS_LOKI-1}"
+        "uid": "${DS_LOKI}"
       },
       "fieldConfig": {
         "defaults": {
@@ -183,7 +183,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "${DS_LOKI-1}"
+            "uid": "${DS_LOKI}"
           },
           "editorMode": "builder",
           "expr": "{exporter=\"OTLP\"}",
@@ -220,7 +220,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "${DS_LOKI-1}"
+        "uid": "${DS_LOKI}"
       },
       "fieldConfig": {
         "defaults": {
@@ -272,7 +272,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "${DS_LOKI-1}"
+            "uid": "${DS_LOKI}"
           },
           "editorMode": "builder",
           "expr": "sum by(label) (count_over_time({exporter=\"OTLP\"} |= `` | json label=\"body.$attribute\" | __error__=`` [$__range]))",
@@ -307,7 +307,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "${DS_LOKI-1}"
+        "uid": "${DS_LOKI}"
       },
       "fieldConfig": {
         "defaults": {
@@ -362,7 +362,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "${DS_LOKI-1}"
+            "uid": "${DS_LOKI}"
           },
           "editorMode": "builder",
           "expr": "sum by(label) (count_over_time({exporter=\"OTLP\"} | json label=\"body.$attribute\" | __error__=`` [$__range]))",
@@ -397,7 +397,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "${DS_LOKI-1}"
+        "uid": "${DS_LOKI}"
       },
       "fieldConfig": {
         "defaults": {
@@ -464,7 +464,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "${DS_LOKI-1}"
+            "uid": "${DS_LOKI}"
           },
           "editorMode": "builder",
           "expr": "sum by(body_$attribute) (count_over_time({exporter=\"OTLP\"} |= `` | json | __error__=`` [$__range]))",
@@ -490,7 +490,7 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "${DS_LOKI-1}"
+        "uid": "${DS_LOKI}"
       },
       "fieldConfig": {
         "defaults": {
@@ -540,7 +540,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "${DS_LOKI-1}"
+            "uid": "${DS_LOKI}"
           },
           "editorMode": "builder",
           "expr": "sum by(logLevel) (count_over_time({exporter=\"OTLP\"} | json logLevel=\"body.$attribute\" | __error__=`` [$__range]))",
@@ -616,7 +616,7 @@
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "Africa/Lagos",
+  "timezone": "",
   "title": "KubeArmor",
   "uid": "UohN2UU4k",
   "version": 31,

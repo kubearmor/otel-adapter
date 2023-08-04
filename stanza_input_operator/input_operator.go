@@ -5,14 +5,15 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
+	"sync"
+	"time"
+
 	jsoniter "github.com/json-iterator/go"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/pkg/stanza/entry"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/pkg/stanza/operator"
 	"github.com/open-telemetry/opentelemetry-collector-contrib/pkg/stanza/operator/helper"
 	"go.uber.org/zap"
-	"os"
-	"sync"
-	"time"
 )
 
 const operatorType = "kubearmor_input"
@@ -27,6 +28,9 @@ func NewConfig() *Config {
 }
 
 // NewConfigWithID creates a new input config with default values
+// NOTE: The config passed from here gets overwritten by values in the config
+// file. So, override is handled by env variable expansion in collector
+// configuration.
 func NewConfigWithID(operatorID string) *Config {
 	var gRPC string
 	if val, ok := os.LookupEnv("KUBEARMOR_SERVICE"); ok {
@@ -84,6 +88,8 @@ func (operator *Input) Start(_ operator.Persister) error {
 	ctx, cancel := context.WithCancel(context.Background())
 	operator.cancel = cancel
 
+	operator.wg = sync.WaitGroup{}
+
 	logfilter := operator.LogFilter
 	logClient := operator.kubearmorClient
 	// do healthcheck
@@ -100,7 +106,7 @@ func (operator *Input) Start(_ operator.Persister) error {
 			for {
 				err, log := operator.kubearmorClient.recvMsg(operator)
 				if err != nil {
-					operator.Logger().Errorf("%s", err.Error())
+					operator.Logger().Warnf("%s", err.Error())
 					return
 				}
 				arr, _ := json.Marshal(log)
@@ -130,7 +136,7 @@ func (operator *Input) Start(_ operator.Persister) error {
 			for {
 				err, log := logClient.recvAlerts(operator)
 				if err != nil {
-					operator.Logger().Errorf("%s", err.Error())
+					operator.Logger().Warnf("%s", err.Error())
 					return
 				}
 				arr, _ := json.Marshal(log)
@@ -160,7 +166,7 @@ func (operator *Input) Start(_ operator.Persister) error {
 			for {
 				err, log := operator.kubearmorClient.recvLogs(operator)
 				if err != nil {
-					operator.Logger().Errorf("%s", err.Error())
+					operator.Logger().Warnf("%s", err.Error())
 					return
 				}
 				arr, _ := json.Marshal(log)
@@ -219,12 +225,11 @@ func (operator *Input) parseLogEntry(line []byte) (*entry.Entry, error) {
 func (operator *Input) Stop() error {
 	operator.cancel()
 
-	operator.wg.Wait()
 	if err := operator.kubearmorClient.DestroyClient(); err != nil {
-
 		return fmt.Errorf("Failed to destroy the kubearmor relay gRPC client (%s)\n", err.Error())
-
 	}
+
+	operator.wg.Wait()
 
 	operator.Logger().Info("Destroyed kubearmor relay gRPC client")
 	operator.Logger().Info("Stopped kubearmor receiver")
