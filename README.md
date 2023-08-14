@@ -3,7 +3,7 @@
   
   
 <br />
-    <h1>OpenTelemetry KubeArmor Receiver <img src="https://opentelemetry.io/img/logos/opentelemetry-logo-nav.png" alt="OpenTelemetry Icon" width="45" height=""></h1>
+    <h1>OpenTelemetry KubeArmor Adapter<img src="https://opentelemetry.io/img/logos/opentelemetry-logo-nav.png" alt="OpenTelemetry Icon" width="45" height=""></h1>
   <p>
 KubeArmor receiver component for openTelemetry collector.
 
