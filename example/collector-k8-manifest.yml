@@ -19,13 +19,19 @@ spec:
         verbosity: detailed
       loki:
         endpoint: "http://loki.default.svc:3100/loki/api/v1/push"
-
+    processors:
+      filter/ottl:
+        error_mode: ignore
+        logs:
+          log_record:
+          - 'not (IsMatch(body, ".*Permission denied.*"))'
     service:
       pipelines:
         logs:
           receivers:
             - kubearmor_receiver
-          processors: []
+          processors:
+            - filter/ottl
           exporters:
             - loki
             - logging
