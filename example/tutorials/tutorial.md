@@ -3,7 +3,7 @@
 We would be creating an OpenTelemetry collector to test out the receiver. The OpenTelemetry Collector offers a vendor-agnostic implementation of how to receive, process and export telemetry data. Read more about it in the [docs](https://opentelemetry.io/docs/collector/). There are different versions:
 
 1. [Collector-core collector](https://github.com/open-telemetry/opentelemetry-collector)
-   The components that are a part of this collector are fixed that i.e. components are not contributed to this collector. It is maintained by the OpenTelemetry community
+   The components that are a part of this collector are fixed i.e. components are not contributed to this collector. It is maintained by the OpenTelemetry community
 2. [Collector contrib collector](https://github.com/open-telemetry/opentelemetry-collector-contrib)
    This consists of a growing number of components contributed by the community, observability vendors and any one in general with a need to create custom components for a specific use,
 3. Custom collector
@@ -57,6 +57,8 @@ kubectl apply -f example/collector-k8-manifest.yml
     kubectl logs -n kube-system ds/kubearmor-collector-collector -f
     ```
 
+***Learn about the receiver's configuration [here](tutorial.md#kubearmor-receiver-config).***
+
 #### Cleanup
 ```bash
 # delete the collector
@@ -72,7 +74,7 @@ kubectl delete -f https://github.com/cert-manager/cert-manager/releases/latest/d
 ### COLLECTOR ON BARE METAL
 
 #### Run pre-built OpeneTelemetry collector
-If you want to skip building the example collector yoursleves, you can use the pre-built one with:
+If you want to skip building the example collector yourselves, you can use the pre-built one with:
 ```bash
 docker run -d --net=host --name=kubearmor-otel-receiver kubearmor/otel-receiver
 ```
@@ -106,11 +108,45 @@ Note:
 - `config.yml` file is located in this repo at `example/config.yml`.
 Examine the logs to see that it is properly running.
 
+
+***Learn about the receiver's configuration options [here](tutorial.md#kubearmor-receiver-config).***
+
 #### Cleanup
 ```bash
 # stop and remove the collector container
 docker stop kubearmor-otel-receiver; docker rm kubearmor-otel-receiver
 ```
+
+### Kubearmor receiver config.
+
+There are two configuration options for the receiver:
+
+- **endpoint:**
+  
+   This specifies kubearmor's server API URL.
+  
+- **logfilter**
+  
+   This is used to specify which logs one is interested in. There are three filters:
+  
+   - kubearmorLogs:
+     
+     Use this if you want to see Kubearmor's internal logs only.
+     
+   - policy
+     
+     Use this if you want to see alerts only.
+  
+   - system
+     
+     Use this if you want to see logs about insights gotten by kubearmor about the host system only.
+     
+   - all
+     
+      Use this if you want to see internal logs, insights and alerts.
+     
+Refer to [kubearmor_receiver/testdata/config.yml](kubearmor_receiver/testdata/config.yml) for a visual example on how to
+place the options in your configuration file.  
 
 ## OpenTelemetry KubeArmor Logs pattern
 ```log

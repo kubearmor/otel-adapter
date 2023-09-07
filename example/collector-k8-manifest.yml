@@ -11,9 +11,8 @@ spec:
   config: |
     receivers:
       kubearmor_receiver:
-        endpoint: ${env:KUBEARMOR_SERVICE?default=kubearmor:32767}
-        logfilter: ${env:LOGFILTER?default=all}
-
+        endpoint: kubearmor:32767
+        logfilter: all
     exporters:
       logging:
         verbosity: detailed
@@ -29,6 +28,3 @@ spec:
           exporters:
             - loki
             - logging
-  env:
-  - name: KUBEARMOR_SERVICE
-    value: kubearmor:32767
