@@ -20,6 +20,7 @@ processors:
 - gomod: go.opentelemetry.io/collector/processor/batchprocessor v0.81.0
 - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/attributesprocessor v0.81.0
 - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/resourceprocessor v0.81.0
+- gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/filterprocessor v0.81.0  
 
 replaces:
 - github.com/kubearmor/OTel-receiver/kubearmor_receiver => ../kubearmor_receiver
