@@ -3,7 +3,7 @@ module github.com/kubearmor/OTel-receiver/kubearmor_receiver
 go 1.20
 
 require (
-	github.com/kubearmor/OTel-receiver/stanza_input_operator v0.0.0-20230710113042-320dae4d94ab
+	github.com/kubearmor/OTel-receiver/stanza_input_operator v0.0.0-20231019104152-fab8f7d48e63
 	github.com/open-telemetry/opentelemetry-collector-contrib/pkg/stanza v0.81.0
 	github.com/stretchr/testify v1.8.4
 	go.opentelemetry.io/collector/component v0.81.0
