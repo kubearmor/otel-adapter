@@ -2,16 +2,14 @@ apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
   name: kubearmor-collector
-  namespace: kube-system
-    #namespace: kubearmor
+  namespace: kubearmor
 spec:
   image: kubearmor/otel-receiver:latest
-  mode: daemonset
   imagePullPolicy: Always
   config: |
     receivers:
       kubearmor_receiver:
-        endpoint: kubearmor:32767
+        endpoint: kubearmor:32767 # Please update this if you install collector in a seperate namespace
         logfilter: all
     exporters:
       logging:
