@@ -36,7 +36,9 @@ If you want to skip building the collector yourself, deploy the [example manifes
 kubectl apply -f example/collector-k8-manifest.yml
 ```
 
-#### Build and install OpenTelemetry collector in K8s
+<details>
+  <summary><h4> Build and install OpenTelemetry collector in K8s</h4></summary>
+
 1. Build custom collector docker image. We would be using the [Dockerfile](../../../Dockerfile) to build the image.
    ```bash
    docker build -t=<docker username>/<image name> .
@@ -54,10 +56,13 @@ kubectl apply -f example/collector-k8-manifest.yml
    Checkout other [deployment patterns](https://opentelemetry.io/docs/collector/deployment/) for OpenTelemetry collectors.
 5. View the logs of the daemonset to check if it runs fine.
     ```bash
-    kubectl logs -n kube-system ds/kubearmor-collector-collector -f
+    kubectl logs -n kubearmor deployment/kubearmor-collector-collector -f
     ```
 
 ***Learn about the receiver's configuration [here](tutorial.md#kubearmor-receiver-config).***
+
+</details>
+
 
 #### Cleanup
 ```bash
