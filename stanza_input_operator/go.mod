@@ -4,11 +4,11 @@ go 1.20
 
 require (
 	github.com/json-iterator/go v1.1.12
-	github.com/kubearmor/KubeArmor/protobuf v0.0.0-20230725100717-ccf89f98724e
+	github.com/kubearmor/KubeArmor/protobuf v0.0.0-20231129072440-719ae8563da7
 	github.com/open-telemetry/opentelemetry-collector-contrib/pkg/stanza v0.81.0
 	github.com/stretchr/testify v1.8.4
 	go.uber.org/zap v1.24.0
-	google.golang.org/grpc v1.56.2
+	google.golang.org/grpc v1.56.3
 )
 
 require (
