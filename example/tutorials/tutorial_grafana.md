@@ -33,7 +33,13 @@ Depending on your KubeArmor setup, you can follow:
     --set loki.storage.type="filesystem" \
     --set loki.auth_enabled=false \
     --set singleBinary.replicas=1
+
     ```
+    If integration with Alertmanager is required, along with retention period, we can use `../loki-values.yaml` and run:
+    ```bash
+    helm upgrade --install loki grafana/loki --values ../loki-values.yaml
+    ```
+    Make sure to change the Alertmanager URL so that loki points to the existing Alertmanager instance.
 
     Visit the Grafana dasbhoard at localhost:3000 and add Loki as a datasource. The endpoint for Loki is the cluster IP service address i.e `http://loki.default.svc:3100`.
 
@@ -82,6 +88,8 @@ Depending on your KubeArmor setup, you can follow:
 4. Refer to the example [Grafana dashboard](../grafana_dashboard.json) and follow [this tutorial](https://grafana.com/docs/grafana/latest/dashboards/manage-dashboards/#import-a-dashboard) to import the Grafana dashboard JSON to your instance
 
 5. You should have a working Grafana and Loki dashboard with KubeArmor logs now. Validate if your dashboard works as expected by viewing the demo video at the bottom of this page.
+
+6. If loki is installed with Alertmanager integration, we can apply `../kubearmor-promrules.yaml` to see alerts being generated on Alertmanager, which can further be sent to slack, webhooks and more.
 
 #### Cleanup
 To cleanup the demo setup, run:
