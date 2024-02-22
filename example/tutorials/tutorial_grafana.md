@@ -97,6 +97,7 @@ To cleanup the demo setup, run:
 kubectl delete -f example/collector-k8-manifest.yml
 helm uninstall loki
 helm uninstall grafana
+kubectl delete -f example/kubearmor-promrules.yaml
 kubectl delete -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
 kubectl delete -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml
 ```
