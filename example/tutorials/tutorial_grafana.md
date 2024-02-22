@@ -89,7 +89,7 @@ Depending on your KubeArmor setup, you can follow:
 
 5. You should have a working Grafana and Loki dashboard with KubeArmor logs now. Validate if your dashboard works as expected by viewing the demo video at the bottom of this page.
 
-6. If loki is installed with Alertmanager integration, we can apply `../kubearmor-promrules.yaml` to see alerts being generated on Alertmanager, which can further be sent to slack, webhooks and more.
+6. If loki is installed with Alertmanager integration, we can apply `../kubearmor-alertrules.yaml` to see alerts being generated on Alertmanager, which can further be sent to slack, webhooks and more.
 
 #### Cleanup
 To cleanup the demo setup, run:
@@ -97,7 +97,7 @@ To cleanup the demo setup, run:
 kubectl delete -f example/collector-k8-manifest.yml
 helm uninstall loki
 helm uninstall grafana
-kubectl delete -f example/kubearmor-promrules.yaml
+kubectl delete -f example/kubearmor-alertrules.yaml
 kubectl delete -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
 kubectl delete -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml
 ```
