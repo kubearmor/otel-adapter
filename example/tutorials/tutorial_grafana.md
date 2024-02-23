@@ -162,3 +162,7 @@ Grafana dashboard usage:
 - View the amount of each unique value of each log attribute using pie chanrt, guage and table.
 - Dynamically choose the log attribute that you would like to view using the `log attribute` variable
 - Filter through logs using `filter` variable.
+
+If Loki is integrated with Alertmanager, on policy actions, you'd be able to see alerts like these:
+
+![image](../alerts.png)
