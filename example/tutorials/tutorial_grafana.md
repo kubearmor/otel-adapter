@@ -35,7 +35,7 @@ Depending on your KubeArmor setup, you can follow:
     --set singleBinary.replicas=1
 
     ```
-    If integration with Alertmanager is required, along with retention period, we can use `../loki-values.yaml` and run:
+    If integration with [Alertmanager](https://github.com/prometheus/alertmanager#install) is required, along with retention period, we can use `../loki-values.yaml` and run:
     ```bash
     helm upgrade --install loki grafana/loki --values ../loki-values.yaml
     ```
