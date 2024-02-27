@@ -1,0 +1,44 @@
+loki:
+  limits_config:
+    retention_period: 24h
+  compactor:
+    retention_enabled: true
+    retention_delete_delay: 1h
+  table_manager:
+    retention_deletes_enabled: true
+    retention_period: 24h
+  commonConfig:
+    replication_factor: 1
+  storage:
+    type: filesystem
+  auth_enabled: false
+  rulerConfig:
+    query_stats_enabled: true
+    alertmanager_url: http://prometheus-kube-alertmanager.monitoring.svc.cluster.local:9093
+    enable_alertmanager_v2: true
+    enable_api: true
+    ring:
+      kvstore:
+        store: inmemory
+    rule_path: "/var/loki/rules-temp"
+    storage:
+      local:
+        directory: /var/loki/rulestorage
+      type: local    
+singleBinary:
+  replicas: 1
+  persistence:
+    enabled: true
+    size: 20Gi
+  extraVolumes:
+  - name: rules
+    configMap:
+      name: loki-alerting-rules
+      defaultMode: 420
+  extraVolumeMounts:
+      - name: rules
+        mountPath: "/var/loki/rulestorage/fake"    
+gateway:
+  nginxConfig:
+    enableIPv6: false
+

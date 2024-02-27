@@ -33,7 +33,13 @@ Depending on your KubeArmor setup, you can follow:
     --set loki.storage.type="filesystem" \
     --set loki.auth_enabled=false \
     --set singleBinary.replicas=1
+
     ```
+    If integration with [Alertmanager](https://github.com/prometheus/alertmanager#install) is required, along with retention period, we can use `../loki-values.yaml` and run:
+    ```bash
+    helm upgrade --install loki grafana/loki --values ../loki-values.yaml
+    ```
+    Make sure to change the Alertmanager URL so that loki points to the existing Alertmanager instance.
 
     Visit the Grafana dasbhoard at localhost:3000 and add Loki as a datasource. The endpoint for Loki is the cluster IP service address i.e `http://loki.default.svc:3100`.
 
@@ -83,12 +89,15 @@ Depending on your KubeArmor setup, you can follow:
 
 5. You should have a working Grafana and Loki dashboard with KubeArmor logs now. Validate if your dashboard works as expected by viewing the demo video at the bottom of this page.
 
+6. If loki is installed with Alertmanager integration, we can apply `../kubearmor-alertrules.yaml` to see alerts being generated on Alertmanager, which can further be sent to slack, webhooks and more.
+
 #### Cleanup
 To cleanup the demo setup, run:
 ```bash
 kubectl delete -f example/collector-k8-manifest.yml
 helm uninstall loki
 helm uninstall grafana
+kubectl delete -f example/kubearmor-alertrules.yaml
 kubectl delete -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
 kubectl delete -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml
 ```
@@ -153,3 +162,7 @@ Grafana dashboard usage:
 - View the amount of each unique value of each log attribute using pie chanrt, guage and table.
 - Dynamically choose the log attribute that you would like to view using the `log attribute` variable
 - Filter through logs using `filter` variable.
+
+If Loki is integrated with Alertmanager, on policy actions, you'd be able to see alerts like these:
+
+![image](../alerts.png)
