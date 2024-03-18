@@ -15,8 +15,8 @@ env:
 
 jobs:
   build:
-    name: Publish otel-receiver latest Docker image
-    if: github.repository == 'kubearmor/otel-receiver'
+    name: Publish otel-adapter latest Docker image
+    if: github.repository == 'kubearmor/otel-adapter'
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
@@ -38,4 +38,4 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker buildx build --platform=$PLATFORMS -t=kubearmor/otel-receiver:latest --push .
+          docker buildx build --platform=$PLATFORMS -t=kubearmor/otel-adapter:latest --push .

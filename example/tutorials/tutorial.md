@@ -31,7 +31,7 @@ Depending on your deployment mode, you can follow:
    ```
 
 #### Run pre-built OpenTelemetry collector in K8s
-If you want to skip building the collector yourself, deploy the [example manifest](../collector-k8-manifest.yml) which pulls pre-built `kubearmor/otel-receiver` image:
+If you want to skip building the collector yourself, deploy the [example manifest](../collector-k8-manifest.yml) which pulls pre-built `kubearmor/otel-adapter` image:
 ```bash
 kubectl apply -f example/collector-k8-manifest.yml
 ```
@@ -81,7 +81,7 @@ kubectl delete -f https://github.com/cert-manager/cert-manager/releases/latest/d
 #### Run pre-built OpeneTelemetry collector
 If you want to skip building the example collector yourselves, you can use the pre-built one with:
 ```bash
-docker run -d --net=host --name=kubearmor-otel-receiver kubearmor/otel-receiver
+docker run -d --net=host --name=kubearmor-otel-adapter kubearmor/otel-adapter
 ```
 
 #### Build a custom OpenTelemetry collector distribution.
@@ -119,7 +119,7 @@ Examine the logs to see that it is properly running.
 #### Cleanup
 ```bash
 # stop and remove the collector container
-docker stop kubearmor-otel-receiver; docker rm kubearmor-otel-receiver
+docker stop kubearmor-otel-adapter; docker rm kubearmor-otel-adapter
 ```
 
 ### Kubearmor receiver config.

@@ -16,8 +16,8 @@ on:
 
 jobs:
   build:
-    name: Build & test otel-receiver
-    if: github.repository == 'kubearmor/otel-receiver'
+    name: Build & test otel-adapter
+    if: github.repository == 'kubearmor/otel-adapter'
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     steps:
@@ -27,7 +27,7 @@ jobs:
         with:
           go-version: "v1.22"
 
-      - name: Build otel-receiver
+      - name: Build otel-adapter
         env:
           GO111MODULE: on
           CGO_ENABLED: 0

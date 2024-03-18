@@ -133,7 +133,7 @@ kubectl delete -f https://github.com/cert-manager/cert-manager/releases/latest/d
 
    Once done with configuration, deploy the KubeArmor OpenTelemetry receiver with your custom configuration by running:
    ```bash
-   docker run -d --network=host -v $PWD/example/config.yml:/otelcol-custom/config.yml --name=kubearmor-otel-receiver kubearmor/otel-receiver:latest
+   docker run -d --network=host -v $PWD/example/config.yml:/otelcol-custom/config.yml --name=kubearmor-otel-adapter kubearmor/otel-adapter:latest
    ```
 
 3. Refer to the example [Grafana dashboard](../grafana_dashboard.json) and follow [this tutorial](https://grafana.com/docs/grafana/latest/dashboards/manage-dashboards/#import-a-dashboard) to import the Grafana dashboard JSON to your instance.
@@ -145,7 +145,7 @@ kubectl delete -f https://github.com/cert-manager/cert-manager/releases/latest/d
 #### Cleanup
 To cleanup the demo setup, run:
 ```bash
-docker stop kubearmor-otel-receiver; docker rm kubearmor-otel-receiver
+docker stop kubearmor-otel-adapter; docker rm kubearmor-otel-adapter
 docker compose -f example/docker-compose.yml down
 ```
 
