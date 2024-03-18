@@ -38,4 +38,4 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker buildx build --platform=$PLATFORMS -t=kubearmor/otel-receiver:latest --push .
+          docker buildx build --platform=$PLATFORMS -t=kubearmor/otel-adapter:latest --push .
