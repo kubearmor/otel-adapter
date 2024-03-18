@@ -1,6 +1,8 @@
 module github.com/kubearmor/OTel-receiver/kubearmor_receiver
 
-go 1.21
+go 1.22
+
+toolchain go1.22.1
 
 require (
 	github.com/kubearmor/OTel-receiver/stanza_input_operator v0.0.0-20240227121612-9810a4671c42
@@ -22,6 +24,7 @@ require (
 	github.com/go-viper/mapstructure/v2 v2.0.0-alpha.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
+	github.com/gorilla/mux v1.8.1 // indirect
 	github.com/haimrubinstein/go-syslog/v3 v3.0.0 // indirect
 	github.com/hashicorp/go-version v1.6.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
