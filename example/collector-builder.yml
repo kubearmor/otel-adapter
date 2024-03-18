@@ -4,22 +4,22 @@ dist:
   output_path: ./otel-custom
 
 exporters:
-- gomod: go.opentelemetry.io/collector/exporter/loggingexporter v0.81.0
-- gomod: github.com/open-telemetry/opentelemetry-collector-contrib/exporter/splunkhecexporter v0.81.0
-- gomod: go.opentelemetry.io/collector/exporter/otlpexporter v0.81.0
-- gomod: github.com/open-telemetry/opentelemetry-collector-contrib/exporter/lokiexporter v0.81.0
+- gomod: go.opentelemetry.io/collector/exporter/loggingexporter v0.96.0
+- gomod: github.com/open-telemetry/opentelemetry-collector-contrib/exporter/splunkhecexporter v0.96.0
+- gomod: go.opentelemetry.io/collector/exporter/otlpexporter v0.96.0
+- gomod: github.com/open-telemetry/opentelemetry-collector-contrib/exporter/lokiexporter v0.96.0
 
 extensions:
-- gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/basicauthextension v0.81.0
-- gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/headerssetterextension v0.81.0
+- gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/basicauthextension v0.96.0
+- gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/headerssetterextension v0.96.0
 
 receivers:
 - gomod: github.com/kubearmor/OTel-receiver/kubearmor_receiver latest
 
 processors:
-- gomod: go.opentelemetry.io/collector/processor/batchprocessor v0.81.0
-- gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/attributesprocessor v0.81.0
-- gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/resourceprocessor v0.81.0
+- gomod: go.opentelemetry.io/collector/processor/batchprocessor v0.96.0
+- gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/attributesprocessor v0.96.0
+- gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/resourceprocessor v0.96.0
 
 replaces:
 - github.com/kubearmor/OTel-receiver/kubearmor_receiver => ../kubearmor_receiver
