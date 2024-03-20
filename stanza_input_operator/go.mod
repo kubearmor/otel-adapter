@@ -7,7 +7,7 @@ toolchain go1.22.1
 require (
 	github.com/gorilla/mux v1.8.1
 	github.com/json-iterator/go v1.1.12
-	github.com/kubearmor/KubeArmor/protobuf v0.0.0-20240315152532-c48e0d341a9b
+	github.com/kubearmor/KubeArmor/protobuf v1.3.2
 	github.com/open-telemetry/opentelemetry-collector-contrib/pkg/stanza v0.96.0
 	github.com/stretchr/testify v1.8.4
 	go.uber.org/zap v1.27.0
