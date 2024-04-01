@@ -9,7 +9,7 @@ ENV GO111MODULE=on
 ENV CGO_ENABLED=0
 
 # install ocb and build
-RUN go install go.opentelemetry.io/collector/cmd/builder@latest
+RUN go install go.opentelemetry.io/collector/cmd/builder@v0.96.0
 RUN builder --config=example/collector-builder.yml
 
 FROM scratch
