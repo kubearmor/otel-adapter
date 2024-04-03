@@ -25,7 +25,7 @@ type ReceiverType struct{}
 
 // Type is the receiver type
 func (f ReceiverType) Type() component.Type {
-	return typeStr
+	return component.Type(typeStr)
 }
 
 // CreateDefaultConfig creates a config with type and version
