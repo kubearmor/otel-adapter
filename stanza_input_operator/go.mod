@@ -2,7 +2,7 @@ module github.com/kubearmor/OTel-receiver/stanza_input_operator
 
 go 1.22
 
-toolchain go1.22.1
+toolchain go1.23.2
 
 require (
 	github.com/json-iterator/go v1.1.12
