@@ -9,7 +9,7 @@ require (
 	github.com/kubearmor/KubeArmor/protobuf v0.0.0-20240401073901-cdfe3f8b314b
 	github.com/open-telemetry/opentelemetry-collector-contrib/pkg/stanza v0.96.0
 	github.com/stretchr/testify v1.8.4
-	go.uber.org/zap v1.27.0
+	go.uber.org/zap v1.28.0
 	google.golang.org/grpc v1.62.1
 )
 
