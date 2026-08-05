@@ -6,7 +6,7 @@ toolchain go1.22.1
 
 require (
 	github.com/kubearmor/OTel-receiver/stanza_input_operator v0.0.0-20240227121612-9810a4671c42
-	github.com/open-telemetry/opentelemetry-collector-contrib/pkg/stanza v0.96.0
+	github.com/open-telemetry/opentelemetry-collector-contrib/pkg/stanza v0.158.0
 	github.com/stretchr/testify v1.8.4
 	go.opentelemetry.io/collector/component v0.96.0
 	go.opentelemetry.io/collector/confmap v0.96.0
